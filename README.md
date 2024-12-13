@@ -20,6 +20,8 @@ The executable file will be `out/simplecontrols`.
 To build and install system wide (simpler, requires root user), use `./build.sh --release --system`  
 The executable can then be accessed simply with `simplecontrols`  
 
+Uninstall system wide install with `./build.sh --delete`
+
 ___
 ## Dependencies
 

@@ -23,6 +23,7 @@ $RESET
   [$ITALIC --debug   $RESET| $ITALIC-d$RESET ]:   runs the built file with valgrind
   [$ITALIC --release $RESET| $ITALIC-R$RESET ]:   builds with O3 compiler flags
   [$ITALIC --system  $RESET| $ITALIC-s$RESET ]:   installs executable system wide
+  [$ITALIC --delete  $RESET| $ITALIC-d$RESET ]:   uninstalls executable system wide
 \
 \
 $BOLD
@@ -36,6 +37,7 @@ $RESET
   ./build.sh --cached --run --release  (build and run without library install with O3 option)
   ./build.sh --cached --debug          (build and debug without library install)
   ./build.sh --system                  (build and install system wide)
+  ./build.sh --delete                  (uninstalls executable system wide)
   ./build.sh                           (build without running)    
 
 "
@@ -105,6 +107,10 @@ for i in "$@"; do
         -S|--system)
             SYSTEM_INSTALL=true
             shift
+            ;;
+        -d|--delete)
+            sudo rm -I /usr/local/bin/"$PROJECT"
+            exit 0
             ;;
     esac
 done
