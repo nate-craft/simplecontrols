@@ -10,11 +10,11 @@ const Str BRIGHTNESS_HELP_MSG =
         "  --lower      decrements the brightness by 5\n");
 
 const CStr CMD_GET_BRIGHTNESS = cstr("light -G");
-const CStr CMD_NOTIFY_BRIGHTNESS_MIN = cstr("dunstify -r 9999 \"Brightness\" \"Minimum\"");
+const CStr CMD_NOTIFY_BRIGHTNESS_MIN = cstr("notify-send -r 9999 \"Brightness\" \"Minimum\"");
 const Str CMD_FMT_INCREMENT_BRIGHTNESS = str("light -A %d");
 const Str CMD_FMT_DECREMENT_BRIGHTNESS = str("light -U %d");
 const Str CMD_FMT_SET_BRIGHTNESS = str("light -S %s");
-const Str CMD_FMT_NOTIFY_BRIGHTNESS = str("dunstify -r 9999 \"Brightness\" \"%d%%\"");
+const Str CMD_FMT_NOTIFY_BRIGHTNESS = str("notify-send -r 9999 \"Brightness\" \"%d%%\"");
 
 i32 get_brightness();
 

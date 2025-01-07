@@ -19,10 +19,10 @@ const CStr CMD_SET_MUTE_INPUT_OFF = cstr("pactl set-sink-mute @DEFAULT_SINK@ no"
 const CStr CMD_SET_MUTE_INPUT_ON = cstr("pactl set-sink-mute @DEFAULT_SINK@ yes");
 const CStr CMD_SET_MUTE_OUTPUT_OFF = cstr("pactl set-source-mute @DEFAULT_SOURCE@ no");
 const CStr CMD_SET_MUTE_OUTPUT_ON = cstr("pactl set-source-mute @DEFAULT_SOURCE@ yes");
-const CStr CMD_NOTIFY_MUTED = cstr("dunstify -r 9999 \"Volume\" \"Muted\"");
-const CStr CMD_NOTIFY_MIC_ON = cstr("dunstify -r 9999 \"Microphone\" \"Enabled\"");
-const CStr CMD_NOTIFY_MIC_OFF = cstr("dunstify -r 9999 \"Microphone\" \"Disabled\"");
-const Str CMD_FMT_NOTIFY_VOLUME = str("dunstify -r 9999 \"Volume\" \"%d%%\"");
+const CStr CMD_NOTIFY_MUTED = cstr("notify-send -r 9999 \"Volume\" \"Muted\"");
+const CStr CMD_NOTIFY_MIC_ON = cstr("notify-send -r 9999 \"Microphone\" \"Enabled\"");
+const CStr CMD_NOTIFY_MIC_OFF = cstr("notify-send -r 9999 \"Microphone\" \"Disabled\"");
+const Str CMD_FMT_NOTIFY_VOLUME = str("notify-send -r 9999 \"Volume\" \"%d%%\"");
 const Str CMD_FMT_SET_VOLUME = str("pactl set-sink-volume @DEFAULT_SINK@ %d%%");
 
 typedef enum { AUDIO_INCREMENT, AUDIO_DECREMENT, AUDIO_MUTE_OUTPUT, AUDIO_MUTE_INPUT } AudioFlag;
