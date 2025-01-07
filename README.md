@@ -28,7 +28,7 @@ ___
 ### Runtime
 
 - [PulseAudio](https://www.freedesktop.org/wiki/Software/PulseAudio/)
-- [LibNotify](https://github.com/GNOME/libnotify)
+- [Dunstifyf](https://dunst-project.org/documentation/dunstify/)
 - [Light](https://github.com/klaxalk/light/tree/master)
 - Any notification daemon  
 
