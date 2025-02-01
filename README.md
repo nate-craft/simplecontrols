@@ -8,7 +8,11 @@ Functions include incrementing and decrementing audio/brightness as well as muti
 
 SimpleControls relies on PulseAudio as a backend for audio and LibNotify for on an screen display.  
 
-No configuration is provided by design, but values can easily be modified with any editor in `src/settings.h`  
+___
+## Configuration
+
+No plain text configuration is provided by design.
+Values can easily be modified with any editor in `src/settings.h` and recompiled.
 
 ___
 ## Building
@@ -20,10 +24,13 @@ You can uninstall system installation with `./build.sh --delete`.
 
 ```sh
 # Debian-Based Dependencies
-sudo apt install make cmake libnotify-dev glib-dev dunst light pulseaudio libpulse-dev
+sudo apt install make cmake libnotify-dev glib-dev dunst pulseaudio libpulse-dev
 
-# Redhat-Based Depedencies
-sudo dnf install make cmake libnotify-devel glib-devel dunst light pulseaudio pulseaudio-libs-devel
+# Redhat-Based Dependencies
+sudo dnf install make cmake libnotify-devel glib-devel dunst pulseaudio pulseaudio-libs-devel
+
+# Arch-Based Dependencies
+sudo pacman -S make cmake libnotify glib2 dunst pulseaudio libpulse
 
 # Setup
 git clone https://github.com/higgsbi/simplecontrols
@@ -44,7 +51,7 @@ simplecontrols audio
 
 --mute       toggles output mute status  
 --mute-mic   toggles input mute status  
---higher     increments current output volume by 5  
+--higher     increments current output volume by 5 
 --lower      decrements current output volume by 5  
   
 simplecontrols brightness  
