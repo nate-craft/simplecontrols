@@ -14,6 +14,10 @@ ___
 No plain text configuration is provided by design.
 Values can easily be modified with any editor in `src/settings.h` and recompiled.
 
+For backlight changes, SimpleControls uses the intel_backlight device. If lighting is not working,
+the device is likely not available. The device path can easily be changed in `src/settings.h` as well. 
+Your device can be found with `ls /sys/class/backlight`.
+
 ___
 ## Building
 
