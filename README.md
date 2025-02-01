@@ -1,50 +1,40 @@
 # SimpleControls
 ___
-
 SimpleControls is a minimalist audio and brightness controlling program.
-It allows for easy interfacing with libraries like PulseAudio, Light, and LibNotify for
-easy commands for shorcut mapping and simple feedback via notifications.
+It allows for easy interfacing with PulseAudio, direct control of backlight brightness, and
+easy commands for shorcut mapping and simple feedback via system notifications.
 
 Functions include incrementing and decrementing audio/brightness as well as muting input, and muting output.  
 
-SimpleControls relies on PulseAudio and Light as backends and LibNotify for on an screen display.  
+SimpleControls relies on PulseAudio as a backend for audio and LibNotify for on an screen display.  
 
-No configuration is provided by design, but values can easily be changed in `src/settings.h`  
+No configuration is provided by design, but values can easily be modified with any editor in `src/settings.h`  
 
 ___
 ## Building
 
-Each build will require the dependencies listed below.
+System installation can be used if you want the script installed system-wide.
+Local installation will install the executable to `out/simplecontrols`.
   
-To build to a local directory (great for non-root users), use `./build.sh --release`.  
-The executable file will be `out/simplecontrols`.  
-  
-To build and install system wide (simpler, requires root user), use `./build.sh --release --system`  
-The executable can then be accessed simply with `simplecontrols`  
+You can uninstall system installation with `./build.sh --delete`.
 
-Uninstall system wide install with `./build.sh --delete`
+```sh
+# Debian-Based Dependencies
+sudo apt install make cmake libnotify-dev glib-dev dunst light pulseaudio libpulse-dev
 
-___
-## Dependencies
+# Redhat-Based Depedencies
+sudo dnf install make cmake libnotify-devel glib-devel dunst light pulseaudio pulseaudio-libs-devel
 
-### Runtime
+# Setup
+git clone https://github.com/higgsbi/simplecontrols
+cd simplecontrols
 
-- [PulseAudio](https://www.freedesktop.org/wiki/Software/PulseAudio/)
-- [Light](https://github.com/klaxalk/light/tree/master)
-- Compatible notification daemon such as [Dunst](https://github.com/dunst-project/dunst)
+# System Installation
+./build.sh --release --system
 
-### Building
-
-- [CTK (included in build script)](https://github.com/higgsbi/ctk)
-- [CMake (> 3.0)](https://cmake.org/)
-- [LibNotify Devel](https://gitlab.gnome.org/GNOME/libnotify)
-- [PulseAudio Devel](https://www.freedesktop.org/wiki/Software/PulseAudio/)
-
-#### RedHat-Based Distributions
-`sudo dnf install make cmake libnotify-devel glib-devel dunst light pulseaudio pulseaudio-libs-devel`
-
-#### Debian-Based Distributions
-`sudo apt install make cmake libnotify-dev glib-dev dunst light pulseaudio libpulse-dev`
+# Local Installation 
+./build.sh --release
+```
 
 ___
 ## Commands
