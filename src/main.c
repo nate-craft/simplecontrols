@@ -2,6 +2,7 @@
 #include "brightness.h"
 #include "ctk/io.h"
 #include "ctk/types/string.h"
+#include "notify.h"
 
 typedef enum { BRIGHTNESS_INCREMENT, BRIGHTNESS_DECREMENT } BrightnessFlag;
 
@@ -25,16 +26,19 @@ int main(i32 argc, c8** argv) {
         return 1;
     }
 
+    NotificationState* state = notify_new();
     Str type_str = str_from_chars(argv[1]);
     Str flag_str = str_from_chars(argv[2]);
 
     if (str_equals_str(&type_str, &str("audio"))) {
-        control_volume(&flag_str);
+        control_volume(state, &flag_str);
     } else if (str_equals_str(&type_str, &str("brightness"))) {
-        control_brightness(&flag_str);
+        control_brightness(state, &flag_str);
     } else {
         print(&str("%s\n"), &HELP_MSG);
     }
+
+    notify_free(state);
 
     return 0;
 }

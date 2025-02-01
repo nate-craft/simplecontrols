@@ -13,6 +13,8 @@ No configuration is provided by design, but values can easily be changed in `src
 
 ___
 ## Building
+
+Each build will require the dependencies listed below.
   
 To build to a local directory (great for non-root users), use `./build.sh --release`.  
 The executable file will be `out/simplecontrols`.  
@@ -28,14 +30,21 @@ ___
 ### Runtime
 
 - [PulseAudio](https://www.freedesktop.org/wiki/Software/PulseAudio/)
-- [LibNotify](https://gitlab.gnome.org/GNOME/libnotify)
 - [Light](https://github.com/klaxalk/light/tree/master)
-- Any notification daemon  
+- Compatible notification daemon such as [Dunst](https://github.com/dunst-project/dunst)
 
 ### Building
 
 - [CTK (included in build script)](https://github.com/higgsbi/ctk)
 - [CMake (> 3.0)](https://cmake.org/)
+- [LibNotify Devel](https://gitlab.gnome.org/GNOME/libnotify)
+- [PulseAudio Devel](https://www.freedesktop.org/wiki/Software/PulseAudio/)
+
+#### RedHat-Based Distributions
+`sudo dnf install make cmake libnotify-devel glib-devel dunst light pulseaudio pulseaudio-libs-devel`
+
+#### Debian-Based Distributions
+`sudo apt install make cmake libnotify-dev glib-dev dunst light pulseaudio libpulse-dev`
 
 ___
 ## Commands
