@@ -1,7 +1,7 @@
-#!/bin/bash
-BOLD='\e[1m'
-ITALIC='\e[3m'
-RESET='\e[0m'
+#!/bin/sh
+BOLD=$(printf '\033[1m')
+ITALIC=$(printf '\033[3m')
+RESET=$(printf '\033[0m')
 
 PROJECT=${PWD##*/}
 LIB="ctk"
@@ -9,7 +9,6 @@ RELEASE=false
 CACHED=false
 SYSTEM_INSTALL=false
 RUN_TYPE=""
-
 
 HELP_MESSAGE="
 ${BOLD}$(basename "$PWD")${RESET} - built via cproject
@@ -70,7 +69,7 @@ libs() {
 while [ "$#" -gt 0 ]; do
     case "$1" in        
         -h|--help)
-            echo -e "$HELP_MESSAGE"
+            printf "%s" "$HELP_MESSAGE"
             exit 0
             ;;
         -C|--clean)
@@ -106,6 +105,9 @@ while [ "$#" -gt 0 ]; do
             sudo rm -I /usr/local/bin/"$PROJECT"
             exit 0
             ;;
+        *)
+            break
+            ;;
     esac
 done
 
@@ -115,7 +117,7 @@ fi
 
 build
 
-if ! groups "$USER" | grep &>/dev/null '\bvideo\b'; then
+if ! groups "$USER" | grep '\bvideo\b' 2>&1 >/dev/null ; then
     printf "Adding %s to video group. If not done, brightness controls will not work!\n" "$USER"
     sudo usermod -a -G video "$USER"
 fi
@@ -131,7 +133,8 @@ if ! [  "$(stat -c %A /sys/class/backlight/intel_backlight/brightness | cut -d '
 fi
 
 if [ "$RUN_TYPE" = "run" ]; then
-    "${PWD}/out/${PROJECT}" "$@" 
+    "${PWD}/out/${PROJECT}" "$@"
 elif [ "$RUN_TYPE" = "debug" ]; then
     valgrind -s --leak-check=full --track-origins=yes "${PWD}/out/${PROJECT}" "$@"
 fi
+
