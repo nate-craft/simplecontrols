@@ -106,7 +106,7 @@ void handle_pulse_sink_callback(pa_context* context, const pa_sink_info* info, i
 
     data->mute_sink = info->mute;
     data->volume_sink = (f32) info->volume.values[0] * 100.0 / (f32) PA_VOLUME_NORM;
-    data->volume_sink = data->volume_sink == 0 ? 0 : data->volume_sink + 1;
+    data->volume_sink = ((data->volume_sink + 2) / 5) * 5;  // NOLINT
 
     if (data->default_source != null) {
         pa_operation_unref(pa_context_get_source_info_by_name(context, data->default_source->buffer,
