@@ -14,9 +14,24 @@ ___
 No plain text configuration is provided by design.
 Values can easily be modified with any editor in `src/settings.h` and recompiled.
 
-For backlight changes, SimpleControls uses the intel_backlight device. If lighting is not working,
-the device is likely not available. The device path can easily be changed in `src/settings.h` as well. 
-Your device can be found with `ls /sys/class/backlight`.
+For backlight changes, SimpleControls uses the `intel_backlight` device. If lighting is not working,
+the device is likely not available.
+
+To fix, the device path can easily be changed in `src/settings.h`. To ensure proper functionality,
+a udev rule may also be necessary. The build script automatically installs a udev rule for intel_backlight,
+but if this device is not available, it can be added with the following commands:
+
+```sh
+# intel_backlight can be replaced with the output of "ls /sys/class/backlight"
+UDEV_RULE="
+ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="/bin/chgrp wheel /sys/class/backlight/%k/brightness"
+ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"
+"
+
+echo "$UDEV_RULE" | sudo tee /etc/udev/rules.d/90-backlight.rules
+sudo udevadm control --reload
+sudo udevadm trigger
+```
 
 ___
 ## Building

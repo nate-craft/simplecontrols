@@ -122,12 +122,25 @@ if ! groups "$USER" | grep '\bvideo\b' 2>&1 >/dev/null ; then
     sudo usermod -a -G video "$USER"
 fi
 
+if ! [ -f "/etc/udev/rules.d/90-backlight.rules" ]; then
+    printf "Adding backlight udev rule to ensure brightness file is accessible. If not done, brightness permissions may not work in the future\n"
+
+UDEV_RULE="
+ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="/bin/chgrp wheel /sys/class/backlight/%k/brightness"
+ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"
+"
+
+    echo "$UDEV_RULE" | sudo tee /etc/udev/rules.d/90-backlight.rules
+    sudo udevadm control --reload
+    sudo udevadm trigger
+fi
+
 if [ "$(stat -c %G /sys/class/backlight/intel_backlight/brightness)" != "video" ]; then
     printf "Adding video group to the brightness device. If not done, brightness controls will not work!\n"
     sudo chgrp video /sys/class/backlight/intel_backlight/brightness
 fi
 
-if ! [  "$(stat -c %A /sys/class/backlight/intel_backlight/brightness | cut -d '-' -f4)" = "rw" ]; then
+if ! [  "$(stat -c %A /sys/class/backlight/intel_backlight/brightness | cut -d '-' -f3)" = "rw" ]; then
     printf "Allowing video group to modify brightness. If not done, brightness controls will not work!\n"
     sudo chmod g+w /sys/class/backlight/intel_backlight/brightness
 fi
