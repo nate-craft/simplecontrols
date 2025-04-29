@@ -43,13 +43,13 @@ You can uninstall system installation with `./build.sh --delete`.
 
 ```sh
 # Debian-Based Dependencies
-sudo apt install make cmake libnotify-dev glib-dev dunst pulseaudio libpulse-dev
+sudo apt install make cmake libnotify-dev glib-dev libpulse-dev
 
 # Redhat-Based Dependencies
-sudo dnf install make cmake libnotify-devel glib-devel dunst pulseaudio pulseaudio-libs-devel
+sudo dnf install make cmake libnotify-devel glib-devel pulseaudio-libs-devel
 
 # Arch-Based Dependencies
-sudo pacman -S make cmake libnotify glib2 dunst pulseaudio libpulse
+sudo pacman -S make cmake libnotify glib2 libpulse
 
 # Setup
 git clone https://github.com/higgsbi/simplecontrols
