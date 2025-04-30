@@ -9,37 +9,52 @@
 #include "ctk/types/string.h"
 #include "settings.h"
 
-typedef NotifyNotification NotificationState;
+typedef struct {
+    NotifyNotification* state;
+    bool enabled;
+} Notifier;
 
-inline static NotificationState* notify_new() {
+inline static Notifier notify_new(bool enabled) {
     notify_init("SimpleControls");
-    return null;
+    return (Notifier) {.state = null, .enabled = enabled};
 }
 
-inline static void notify_free(NotificationState* state) {
-    if (state != null) {
-        g_object_unref(G_OBJECT(state));
+inline static void notify_free(Notifier* notifier) {
+    if (!notifier->enabled) {
+        return;
+    }
+
+    if (notifier->state != null) {
+        g_object_unref(G_OBJECT(notifier->state));
     }
     notify_uninit();
 }
 
-inline static void notify(NotificationState* state, const CStr* title, const CStr* message) {
-    if (state == null) {
-        state = notify_notification_new(title->buffer, message->buffer, null);
-        notify_notification_set_hint(state, "replace-id", g_variant_new_string(NOTIFY_KEY.buffer));
-        notify_notification_set_hint(state, "x-dunst-stack-tag", g_variant_new_string(NOTIFY_KEY.buffer));
-    } else {
-        notify_notification_update(state, title->buffer, message->buffer, null);
+inline static void notify(Notifier* notifier, const CStr* title, const CStr* message) {
+    if (!notifier->enabled) {
+        return;
     }
 
-    notify_notification_show(state, null);
+    if (notifier->state == null) {
+        notifier->state = notify_notification_new(title->buffer, message->buffer, null);
+        notify_notification_set_hint(notifier->state, "replace-id", g_variant_new_string(NOTIFY_KEY.buffer));
+        notify_notification_set_hint(notifier->state, "x-dunst-stack-tag", g_variant_new_string(NOTIFY_KEY.buffer));
+    } else {
+        notify_notification_update(notifier->state, title->buffer, message->buffer, null);
+    }
+
+    notify_notification_show(notifier->state, null);
 }
 
-inline static void notifyf(NotificationState* state, const CStr* title, const Str* message_format, ...) {
+inline static void notifyf(Notifier* notifier, const CStr* title, const Str* message_format, ...) {
+    if (!notifier->enabled) {
+        return;
+    }
+
     va_list args;
     va_start(args, message_format);
     CString* message = cstring_from_args(message_format, args);
-    notify(state, title, cstring_slice(message));
+    notify(notifier, title, cstring_slice(message));
     cstring_free(message);
     va_end(args);
 }

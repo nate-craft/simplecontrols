@@ -18,7 +18,7 @@ i32 get_brightness(i32 max_brightness);
 i32 get_raw_max_brightness();
 void set_brightness(f32 brightness_precise, i32 max_brightness);
 
-void control_brightness(NotificationState* state, Str* flag_str) {
+void control_brightness(Notifier* state, Str* flag_str) {
     i32 max_brightness = get_raw_max_brightness();
     i32 brightness = get_brightness(max_brightness);
 

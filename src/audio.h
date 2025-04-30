@@ -4,6 +4,6 @@
 #include "ctk/types/string.h"
 #include "notify.h"
 
-void control_volume(NotificationState* state, Str* flag_str);
+void control_volume(Notifier* state, Str* flag_str);
 
 #endif

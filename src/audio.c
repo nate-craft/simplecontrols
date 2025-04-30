@@ -19,7 +19,7 @@ const Str AUDIO_HELP_MSG =
 
 typedef enum { AUDIO_INCREMENT, AUDIO_DECREMENT, AUDIO_MUTE_OUTPUT, AUDIO_MUTE_INPUT } AudioFlag;
 typedef struct {
-    NotificationState* state;
+    Notifier* state;
     Str* flag_str;
     pa_mainloop* loop;
     CStr* default_sink;
@@ -32,7 +32,7 @@ typedef struct {
 
 // Helper Functions
 pa_cvolume get_pac_volume(i32 volume, i32 channels);
-void modify_volume(NotificationState* state, PulseData* data, pa_context* context, AudioFlag flag);
+void modify_volume(Notifier* state, PulseData* data, pa_context* context, AudioFlag flag);
 void pulse_free(PulseData* data);
 // Callback Function Order
 void handle_pulse_state(pa_context* context, void* given_data);
@@ -42,7 +42,7 @@ void handle_pulse_source_callback(pa_context* context, const pa_source_info* inf
 void handle_pulse_command(PulseData* data, pa_context* context);
 void handle_pulse_operation_callback(pa_context* context, int success, void* userdata);
 
-void control_volume(NotificationState* state, Str* flag_str) {
+void control_volume(Notifier* state, Str* flag_str) {
     pa_mainloop* loop = pa_mainloop_new();
     pa_mainloop_api* pulse = pa_mainloop_get_api(loop);
     pa_context* ctx = pa_context_new(pulse, "SimpleControls");
@@ -169,7 +169,7 @@ void handle_pulse_operation_callback(pa_context* context, int success, void* use
     pa_context_disconnect(context);
 }
 
-void modify_volume(NotificationState* state, PulseData* data, pa_context* context, AudioFlag flag) {
+void modify_volume(Notifier* state, PulseData* data, pa_context* context, AudioFlag flag) {
     i32 volume = data->volume_sink;
     bool muted = data->mute_sink;
 

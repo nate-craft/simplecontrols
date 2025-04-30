@@ -76,7 +76,11 @@ simplecontrols audio
 simplecontrols brightness  
   
 --higher     increments the brightness by 5%  
---lower      decrements the brightness by 5%  
+--lower      decrements the brightness by 5%
+
+extra flags
+
+--silent     silences all notifications
 </pre>
 
 
