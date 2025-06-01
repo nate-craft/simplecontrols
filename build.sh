@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/usr/bin/env sh
+
 BOLD=$(printf '\033[1m')
 ITALIC=$(printf '\033[3m')
 RESET=$(printf '\033[0m')
@@ -124,13 +125,14 @@ fi
 
 if ! [ -f "/etc/udev/rules.d/90-backlight.rules" ]; then
     printf "Adding backlight udev rule to ensure brightness file is accessible. If not done, brightness permissions may not work in the future\n"
+    sudo usermod -a -G video "$USER"
 
-UDEV_RULE="
-ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="/bin/chgrp wheel /sys/class/backlight/%k/brightness"
+UDEV_RULE='
+ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="/bin/chgrp video /sys/class/backlight/%k/brightness"
 ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"
-"
+'
 
-    echo "$UDEV_RULE" | sudo tee /etc/udev/rules.d/90-backlight.rules
+    echo "$UDEV_RULE" | sudo tee /etc/udev/rules.d/90-backlight.rules >/dev/null
     sudo udevadm control --reload
     sudo udevadm trigger
 fi
