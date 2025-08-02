@@ -1,13 +1,22 @@
 ---
 BasedOnStyle: Google
 IndentWidth: 4
-ColumnLimit: 120
+TabWidth: 4
 IncludeBlocks: Merge
 DerivePointerAlignment: false
 PointerAlignment: Left
 QualifierAlignment: Left
-AllowShortFunctionsOnASingleLine: None
+AllowShortFunctionsOnASingleLine: false
 SpaceAfterCStyleCast: true
 SpacesInContainerLiterals: true
+BreakArrays: true
+ColumnLimit: 0
+BraceWrapping:
+  AfterControlStatement: false
+  AfterEnum: false
+  AfterFunction: false
+  AfterStruct: false
+  BeforeElse: false
+BinPackParameters: false
 
 ---
